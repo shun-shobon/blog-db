@@ -1,0 +1,11 @@
+scripts:
+  start: deno run cli.ts
+  lint: deno lint
+  fmt: deno fmt
+  cache: deno cache deps.ts dev_deps.ts
+
+  pre-commit:
+    cmd:
+      - vr lint
+      - vr fmt
+    gitHook: pre-commit
