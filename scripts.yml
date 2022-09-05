@@ -1,5 +1,6 @@
 allow:
   - read
+  - write
 
 scripts:
   start: deno run cli.ts

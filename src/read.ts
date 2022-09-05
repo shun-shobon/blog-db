@@ -1,5 +1,5 @@
-export type Article = string;
+export type ArticleContent = string;
 
-export function readArticle(path: string): Promise<Article> {
+export function readArticle(path: string): Promise<ArticleContent> {
   return Deno.readTextFile(path);
 }
