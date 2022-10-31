@@ -1,8 +1,13 @@
 {
   "imports": {
+    "encoding/": "https://deno.land/std@0.153.0/encoding/",
     "fs/": "https://deno.land/std@0.153.0/fs/",
     "iter_funcs/": "https://deno.land/x/iter_funcs@1.5.0/",
     "path/": "https://deno.land/std@0.153.0/path/",
-    "testing/": "https://deno.land/std@0.153.0/testing/"
+    "testing/": "https://deno.land/std@0.153.0/testing/",
+    "temporal": "https://esm.sh/@js-temporal/polyfill@0.4.2",
+    "remark-parse": "https://esm.sh/remark-parse@10.0.1",
+    "remark-frontmatter": "https://esm.sh/remark-frontmatter@4.0.1",
+    "unified": "https://esm.sh/unified@10.1.2"
   }
 }

@@ -1,6 +1,6 @@
 ---
 title: こんにちは世界
-postedAt: 2022-08-30
+postedAt: "2022-08-30"
 tags:
   - test
   - hello
