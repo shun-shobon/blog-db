@@ -63,7 +63,6 @@ function parseFrontmatter(frontmatter: string): Frontmatter | ParseError {
     return new ParseError("missing property: title");
   }
 
-  console.log(parsed.postedAt);
   if (typeof parsed.postedAt !== "string") {
     return new ParseError("missing property: postedAt");
   }
