@@ -1,6 +1,6 @@
 ---
 title: Markdownのテスト
-postedAt: 2022-08-31
+postedAt: "2022-08-31"
 tags:
   - test
   - markdown

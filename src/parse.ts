@@ -1,22 +1,25 @@
 import { parse as parseYaml } from "encoding/yaml.ts";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
 import remarkFrontmatter from "remark-frontmatter";
 import { Temporal } from "temporal";
+import type { Root } from "mdast";
+
 import { isObject, trying } from "./utils.ts";
 
 export type ParsedArticle = Frontmatter & {
-  // TODO: ASTに置き換える
-  content: string;
+  content: Root;
 };
 
 export function parse(markdown: string): ParsedArticle | ParseError {
-  const result = unified()
+  const content = unified()
     .use(remarkParse)
+    .use(remarkGfm)
     .use(remarkFrontmatter)
     .parse(markdown);
 
-  const frontmatterNode = result.children.find((node) => node.type === "yaml");
+  const frontmatterNode = content.children.find((node) => node.type === "yaml");
   if (!frontmatterNode || frontmatterNode.type !== "yaml") {
     return new ParseError("Frontmatter is not found");
   }
@@ -30,8 +33,7 @@ export function parse(markdown: string): ParsedArticle | ParseError {
     title: frontmatter.title,
     postedAt: frontmatter.postedAt,
     tags: frontmatter.tags,
-    // TODO: ASTに置き換える
-    content: markdown,
+    content,
   };
 }
 
