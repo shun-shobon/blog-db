@@ -5,21 +5,23 @@ import remarkGfm from "remark-gfm";
 import remarkFrontmatter from "remark-frontmatter";
 import { Temporal } from "temporal";
 import type { Root } from "mdast";
+import { toString } from "mdast-util-to-string";
 
 import { isObject, trying } from "./utils.ts";
 
 export type ParsedArticle = Frontmatter & {
   content: Root;
+  summary: string;
 };
 
 export function parse(markdown: string): ParsedArticle | ParseError {
-  const content = unified()
+  const result = unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkFrontmatter)
     .parse(markdown);
 
-  const frontmatterNode = content.children.find((node) => node.type === "yaml");
+  const frontmatterNode = result.children.find((node) => node.type === "yaml");
   if (!frontmatterNode || frontmatterNode.type !== "yaml") {
     return new ParseError("Frontmatter is not found");
   }
@@ -29,11 +31,18 @@ export function parse(markdown: string): ParsedArticle | ParseError {
     return frontmatter;
   }
 
+  const content: Root = {
+    ...result,
+    children: result.children.filter((node) => node.type !== "yaml"),
+  };
+  const summary = toString(content);
+
   return {
     title: frontmatter.title,
     postedAt: frontmatter.postedAt,
     tags: frontmatter.tags,
     content,
+    summary,
   };
 }
 

@@ -8,6 +8,7 @@ const markdown = await Deno.readTextFile(
 
 Deno.test("parse", () => {
   const result = parse(markdown);
+  console.log(result);
 
   assert(!(result instanceof Error));
   assertEquals(result.title, "こんにちは世界");

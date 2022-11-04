@@ -7,6 +7,7 @@
     "testing/": "https://deno.land/std@0.153.0/testing/",
     "temporal": "https://esm.sh/@js-temporal/polyfill@0.4.2",
     "mdast": "https://esm.sh/v96/@types/mdast@3.0.10/index.d.ts",
+    "mdast-util-to-string": "https://esm.sh/mdast-util-to-string@3.1.0",
     "remark-parse": "https://esm.sh/remark-parse@10.0.1",
     "remark-frontmatter": "https://esm.sh/remark-frontmatter@4.0.1",
     "remark-gfm": "https://esm.sh/remark-gfm@3.0.1",
