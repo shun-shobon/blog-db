@@ -1,17 +1,32 @@
-import { assert, assertEquals } from "testing/asserts.ts";
+import { assertEquals } from "testing/asserts.ts";
+import type { Delete, Heading, Paragraph, Text } from "mdast";
+import type { InlineMath } from "mdast-util-math";
+import { parseMarkdown } from "./parse.ts";
 
-import { parse } from "./parse.ts";
+Deno.test("parseMarkdown", () => {
+  const markdown = `# Heading 1
 
-const markdown = await Deno.readTextFile(
-  "example/articles/hello-world/main.md",
-);
+~~strikethrough~~ text $y = ax + b$
+`;
+  const result = parseMarkdown(markdown);
 
-Deno.test("parse", () => {
-  const result = parse(markdown);
-  console.log(result);
+  const heading1 = result.children[0] as Heading;
+  assertEquals(heading1.type, "heading");
+  assertEquals(heading1.depth, 1);
+  const heading1Text = heading1.children[0] as Text;
+  assertEquals(heading1Text.value, "Heading 1");
 
-  assert(!(result instanceof Error));
-  assertEquals(result.title, "こんにちは世界");
-  assertEquals(result.postedAt.toJSON(), "2022-08-30");
-  assertEquals(result.tags, ["test", "hello", "world"]);
+  const paragraph = result.children[1] as Paragraph;
+  type Content = [Delete, Text, InlineMath];
+  const [strikethrough, text, math] = paragraph.children as Content;
+
+  assertEquals(strikethrough.type, "delete");
+  const strikethroughText = strikethrough.children[0] as Text;
+  assertEquals(strikethroughText.value, "strikethrough");
+
+  assertEquals(text.type, "text");
+  assertEquals(text.value, " text ");
+
+  assertEquals(math.type, "inlineMath");
+  assertEquals(math.value, "y = ax + b");
 });
